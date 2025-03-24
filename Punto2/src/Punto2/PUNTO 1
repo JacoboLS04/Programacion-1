@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class ValidadorNombre {
+    public static List<String> nombresConDosR(List<String> nombres) {
+        List<String> resultado = new ArrayList<>();
+
+        for (String nombre : nombres) {
+            String nombreMinuscula = nombre.toLowerCase();
+            int contador = 0;
+
+            for (int i = 0; i < nombreMinuscula.length(); i++) {
+                if (nombreMinuscula.charAt(i) == 'r') {
+                    contador++;
+                }
+            }
+
+            if (contador >= 2) {
+                resultado.add(nombre);
+            }
+        }
+
+        return resultado;
+    }
+
+    public static void main(String[] args) {
+        List<String> nombres = List.of("Roberto", "Ricardo", "Maria", "Ramon", "Carlos");
+        List<String> nombresConDosR = nombresConDosR(nombres);
+        System.out.println(nombresConDosR);  // Imprime: [Roberto, Ricardo]
+    }
+}

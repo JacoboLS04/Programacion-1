@@ -1,0 +1,64 @@
+// Método que agrega a una lista los miembros con nombres palíndromos
+public LinkedList<Miembro> agregarMiembrosPalindromos() {
+    // Creamos una lista nueva para guardar los miembros con nombres palíndromos
+    LinkedList<Miembro> miembrosPalindromos = new LinkedList<>();
+
+    // Revisamos cada miembro de nuestra lista de miembros
+    for (Miembro miembro : miembros) {
+        // Obtenemos solo el primer nombre y lo convertimos a minúsculas
+        String primerNombre = miembro.getNombre().split(" ")[0].toLowerCase();
+
+        // Revisamos si el nombre es palíndromo usando un método auxiliar
+        if (esPalindromo(primerNombre)) {
+            // Si es palíndromo, lo agregamos a nuestra lista
+            miembrosPalindromos.add(miembro);
+        }
+    }
+
+    // Devolvemos la lista con los miembros que tienen nombres palíndromos
+    return miembrosPalindromos;
+}
+
+// Método auxiliar que nos dice si una palabra es palíndromo
+private boolean esPalindromo(String palabra) {
+    // Convertimos la palabra a un arreglo de caracteres
+    char[] letras = palabra.toCharArray();
+
+    // Comparamos las letras del inicio con las del final
+    for (int i = 0; i < letras.length / 2; i++) {
+        // Si alguna letra no coincide, no es palíndromo
+        if (letras[i] != letras[letras.length - 1 - i]) {
+            return false;
+        }
+    }
+
+    // Si llegamos hasta aquí, todas las letras coinciden
+    return true;
+}
+
+
+// V3
+
+
+
+Scanner sc = new Scanner (System.in);
+    System.out.println("Introduce una palabra: ");
+    String cadena_texto = sc.nextLine().toLowerCase();
+
+
+
+     String reverso = "";
+
+        for (int i = cadena_texto.length() - 1; i >=0; i--) {
+        //concatemas desde el ultimo indice hasta el primero para obtener la palabra invertida
+              reverso = reverso + cadena_texto.charAt(i);
+          }
+
+        if (cadena_texto.equals(reverso)) {
+          System.out.println(cadena_texto + " es palindromo");
+        }
+        else {
+          System.out.println(cadena_texto + " no es palindromo");
+        }
+
+

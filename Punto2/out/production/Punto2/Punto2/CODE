@@ -1,0 +1,164 @@
+package Punto2;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Tienda {
+    private List<Cliente> clientes;
+    private List<Producto> productos;
+    private List<Venta> ventas;
+
+    public Tienda() {
+        this.clientes = new ArrayList<>();
+        this.productos = new ArrayList<>();
+        this.ventas = new ArrayList<>();
+    }
+
+    public void agregarCliente(Cliente cliente) {
+        clientes.add(cliente);
+    }
+
+    public void agregarProducto(Producto producto) {
+        productos.add(producto);
+    }
+
+    public void registrarVenta(Venta venta) {
+        ventas.add(venta);
+    }
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public List<Venta> getVentas() {
+        return ventas;
+    }
+
+    public List<Venta> ventasClienteConDosR() {
+        List<Venta> resultado = new ArrayList<>();
+        for (int i = 0; i < ventas.size(); i++) {
+            Venta venta = ventas.get(i);
+            String nombre = venta.getCliente().getNombre().toLowerCase();
+            int contador = 0;
+            for (int j = 0; j < nombre.length(); j++) {
+                if (nombre.charAt(j) == 'r') {
+                    contador++;
+                }
+            }
+            if (contador >= 2 && !resultado.contains(venta)) {
+                resultado.add(venta);
+            }
+        }
+        return resultado;
+    }
+
+    public List<Producto> productosStockMenorA(int valor) {
+        List<Producto> resultado = new ArrayList<>();
+        for (int i = 0; i < productos.size(); i++) {
+            if (productos.get(i).getStock() < valor) {
+                resultado.add(productos.get(i));
+            }
+        }
+        return resultado;
+    }
+
+    public List<Cliente> clientesConMasDeUnaCompra() {
+        List<Cliente> resultado = new ArrayList<>();
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente cliente = clientes.get(i);
+            int contador = 0;
+            for (int j = 0; j < ventas.size(); j++) {
+                if (ventas.get(j).getCliente().getNombre().equals(cliente.getNombre())) {
+                    contador++;
+                }
+            }
+            if (contador > 1 && !resultado.contains(cliente)) {
+                resultado.add(cliente);
+            }
+        }
+        return resultado;
+    }
+
+    public List<Venta> ventasEntreFechas(String fechaInicio, String fechaFin) {
+        List<Venta> resultado = new ArrayList<>();
+        for (int i = 0; i < ventas.size(); i++) {
+            String fechaVenta = ventas.get(i).getFecha();
+            if (fechaVenta.compareTo(fechaInicio) >= 0 && fechaVenta.compareTo(fechaFin) <= 0) {
+                resultado.add(ventas.get(i));
+            }
+        }
+        return resultado;
+    }
+
+    public String nombreClienteMasLargo() {
+        String nombreMasLargo = "";
+        for (int i = 0; i < clientes.size(); i++) {
+            String nombre = clientes.get(i).getNombre();
+            if (nombre.length() > nombreMasLargo.length()) {
+                nombreMasLargo = nombre;
+            }
+        }
+        return nombreMasLargo;
+    }
+
+    public List<String> nombresClientesPalindromos() {
+        List<String> resultado = new ArrayList<>();
+        for (int i = 0; i < clientes.size(); i++) {
+            String nombre = clientes.get(i).getNombre().toLowerCase();
+            boolean esPalindromo = true;
+            for (int j = 0; j < nombre.length() / 2; j++) {
+                if (nombre.charAt(j) != nombre.charAt(nombre.length() - 1 - j)) {
+                    esPalindromo = false;
+                    break;
+                }
+            }
+            if (esPalindromo) {
+                resultado.add(clientes.get(i).getNombre());
+            }
+        }
+        return resultado;
+    }
+
+    public List<Venta> ventasConMontoMayorA(double monto) {
+        List<Venta> resultado = new ArrayList<>();
+        for (int i = 0; i < ventas.size(); i++) {
+            if (ventas.get(i).calcularMontoTotal() > monto) {
+                resultado.add(ventas.get(i));
+            }
+        }
+        return resultado;
+    }
+
+    public List<Cliente> clientesConDominio(String dominio) {
+        List<Cliente> resultado = new ArrayList<>();
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getCorreo().endsWith(dominio)) {
+                resultado.add(clientes.get(i));
+            }
+        }
+        return resultado;
+    }
+
+    public List<Venta> ventasConCategoria(String categoria) {
+        List<Venta> resultado = new ArrayList<>();
+        for (int i = 0; i < ventas.size(); i++) {
+            Venta venta = ventas.get(i);
+            boolean tieneCategoria = false;
+            List<Producto> productosVenta = venta.getProductos();
+            for (int j = 0; j < productosVenta.size(); j++) {
+                if (productosVenta.get(j).getCategoria().equalsIgnoreCase(categoria)) {
+                    tieneCategoria = true;
+                    break;
+                }
+            }
+            if (tieneCategoria) {
+                resultado.add(venta);
+            }
+        }
+        return resultado;
+    }
+}
